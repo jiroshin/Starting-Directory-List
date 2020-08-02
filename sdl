@@ -20,6 +20,7 @@ function starting_directory_list {
   fi
 
   sdl_root_dirs_array=`ls -d $SDL_ROOT/*/ 2> /dev/null`
+  sdl_root_dirs_array=`echo $sdl_root_dirs_array | sed 's|//|/|g'`
 
   sdl_dirs_str=""
   sdl_child_dirs_array=()
