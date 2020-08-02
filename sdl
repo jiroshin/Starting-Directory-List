@@ -1,0 +1,54 @@
+#!/bin/sh
+
+function usage {
+    cat <<EOM
+Usage: 
+  $(basename "$0")        list up starting directries.
+  $(basename "$0") -h     Display help
+
+Starting Directory List:
+  sdl command returns a list of directories under environment variable(SDL_ROOT) and one directory below it.
+  It is a good idea to use the directory one level below as a namespace.
+EOM
+  exit 2
+}
+
+function starting_directory_list {
+  if [ -z "$SDL_ROOT" ]; then
+    echo "you shoud set environment variable: STD_ROOT"
+    exit 1
+  fi
+
+  sdl_root_dirs_array=`ls -d $SDL_ROOT/*/ 2> /dev/null`
+
+  sdl_dirs_str=""
+  sdl_child_dirs_array=()
+
+  for sdl_dir in $sdl_root_dirs_array; do
+    if [ -z "$sdl_dirs_str" ]; then
+      sdl_dirs_str="$sdl_dir"
+    else
+      sdl_dirs_str="$sdl_dirs_str:$sdl_dir"
+    fi
+
+    sdl_child_dirs_array+=`ls -d $sdl_dir*/ 2> /dev/null`
+    sdl_child_dirs_array+=" "
+  done
+
+  for sdl_child_dir in $sdl_child_dirs_array; do
+    sdl_dirs_str="$sdl_dirs_str:$sdl_child_dir"
+  done
+
+  echo "$(echo $sdl_dirs_str | sed 's/:/\\n/g')"
+}
+
+
+while getopts h opt; do
+  case "$opt" in
+    '-h'|'--help'|* )
+      usage
+      ;;
+  esac
+done
+
+starting_directory_list
