@@ -35,15 +35,15 @@ It is a good idea to use the directory one level below as a namespace.
 1. git clone and pass the path to sdl.
 ```
 $ git clone https://github.com/jiroshin/Starting-Directory-List.git
-$ echo export PATH='{{PATH-WHERE-YOU-CLONED}}/:$PATH' >> ~/.bash_profile
+$ echo export PATH="{{PATH-WHERE-YOU-CLONED}}:$PATH" >> ~/.bash_profile
 ```
 
 2. Give the command execute permission.
 ```
-$ chmod 777 {{PATH-WHERE-YOU-CLONED}}/sdl
+$ chmod 777 {{PATH-WHERE-YOU-CLONED}}/Starting-Directory-List/sdl
 ```
 
 3. Set the directory you want to handle with an environment variable.
 ```
-$ echo export SDL_ROOT='$HOME/dev' >> ~/.bash_profile
+$ echo export SDL_ROOT="$HOME/dev" >> ~/.bash_profile
 ```
